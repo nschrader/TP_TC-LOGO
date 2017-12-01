@@ -10,7 +10,7 @@ typedef enum {
 
 typedef InstructionType Instruction;
 
-#define asInstruction(x) (Instruction*)
+#define asInstruction(x) ((Instruction*) x)
 
 /**
  * Program and stuff
