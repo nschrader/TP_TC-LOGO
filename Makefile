@@ -3,10 +3,11 @@ LEX 	= flex
 YACC 	= bison
 
 CFLAGS  = -g
+LDFLAGS = -lm
 PROGRAM	= tc-logo
 LEXERS 	= tc-logo.l
 PARSERS = tc-logo.y
-SOURCES = main.c ast.c
+SOURCES = main.c ast.c instruction.c svg.c compiler.c
 HEADERS = ${SOURCES:.c=.h}
 TOKENS 	= ${PARSERS}.h ${LEXERS}.h
 
@@ -17,7 +18,7 @@ OBJ = ${SRC:.c=.o}
 .PHONY: clean
 
 all:		${OBJ} ${HDR}
-	${CC} ${OBJ} -o ${PROGRAM}
+	${CC} ${LDFLAGS} ${OBJ} -o ${PROGRAM}
 
 %.l.c %.l.c:	%.l
 	${LEX} --outfile=$<.c --header-file=$<.h $<
