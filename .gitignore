@@ -53,3 +53,7 @@ dkms.conf
 
 #Program files
 tc-logo
+*.l.c
+*.l.h
+*.y.c
+*.y.h

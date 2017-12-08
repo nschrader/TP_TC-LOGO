@@ -66,8 +66,6 @@ value
 
 %%
 
-extern FILE *yyin;
-
 int yyerror(YYSTYPE *locp, char const *msg) {
   if (strlen(locp->str) > 0) {
     fprintf(stderr, "\n[Fatal]: %s \"%s\"\n", msg, locp->str);
@@ -75,12 +73,4 @@ int yyerror(YYSTYPE *locp, char const *msg) {
     fprintf(stderr, "\n[Fatal]: %s\n", msg);
   }
   exit(EXIT_FAILURE);
-}
-
-int main() {
-  Program* program;
-  yyin = fopen("test", "r");
-  yyparse(&program);
-  printf("Read some stuff, dunno what to do know");
-  return EXIT_SUCCESS;
 }

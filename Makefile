@@ -5,9 +5,9 @@ YACC 	= bison
 PROGRAM	= tc-logo
 LEXERS 	= tc-logo.l
 PARSERS = tc-logo.y
-SOURCES = ast.c
+SOURCES = main.c ast.c
 HEADERS = ${SOURCES:.c=.h}
-TOKENS 	= ${PARSERS}.h
+TOKENS 	= ${PARSERS}.h ${LEXERS}.h
 
 SRC = ${LEXERS}.c ${PARSERS}.c ${SOURCES}
 HDR = ${HEADERS} ${TOKENS}
@@ -21,14 +21,11 @@ all:		${OBJ}
 %.o:		%.c ${HDR}
 	${CC} ${CFLAGS} -c $< -o $@
 
-%.l.c:	%.l
-	${LEX} --outfile=$@ $<
+%.l.c %.l.h:	%.l
+	${LEX} --outfile=$<.c --header-file=$<.h $<
 
-%.y.c:	%.y
-	${YACC} --output=$@ --defines=${@:.c=.h} $<
-
-%.y.h:	%.y.c
-	true #If there are tokens to be generated in a header, Bison did it already
+%.y.c %.y.h:	%.y
+	${YACC} --output=$<.c --defines=$<.h $<
 
 clean:
-	rm -rf *.l.c *.y.c *.y.h *.o ${PROGRAM}
+	rm -rf *.l.c *.l.h *.y.c *.y.h *.o ${PROGRAM}
