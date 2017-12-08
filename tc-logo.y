@@ -1,6 +1,7 @@
 %{
   #include <stdio.h>
   #include <stdlib.h>
+  #include <string.h>
 
   #define YYERROR_VERBOSE
 %}
@@ -9,7 +10,7 @@
   #include "ast.h"
 }
 
-%parse-param { Program* program }
+%parse-param { Program** program }
 %union {
   int val;
   char* str;
@@ -64,6 +65,8 @@ value
   :TOKEN_UINT           { $$ = $1; }
 
 %%
+
+extern FILE *yyin;
 
 int yyerror(YYSTYPE *locp, char const *msg) {
   if (strlen(locp->str) > 0) {

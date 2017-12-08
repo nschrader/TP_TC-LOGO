@@ -2,7 +2,7 @@
 
 #include "ast.h"
 
-Program* newProgram(Program* right, Instruction instruction) {
+Program* newProgram(Program* right, Instruction* instruction) {
   Program* new = malloc(sizeof(Program));
   new->right = right;
   new->instruction = instruction;

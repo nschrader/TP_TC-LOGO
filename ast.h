@@ -17,10 +17,10 @@ typedef InstructionType Instruction;
  */
  typedef struct _Program {
    struct _Program *right;
-   Instruction instruction;
+   Instruction* instruction;
  } Program;
 
- Program* newProgram(Program* right, Instruction instruction);
+ Program* newProgram(Program* right, Instruction* instruction);
 
 
 /**
