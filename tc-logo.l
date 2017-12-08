@@ -11,6 +11,7 @@ REPEAT     (?i:"REPEAT")
 FORWARD    (?i:"FORWARD")
 L_BRACKET  \[
 R_BRACKET  \]
+BLANK      [ \r\n\t]*
 DEFAULT    .|\n
 
 %%
@@ -22,6 +23,7 @@ DEFAULT    .|\n
 {FORWARD}    { return TOKEN_FORWARD; }
 {L_BRACKET}  { return TOKEN_L_BRACKET; }
 {R_BRACKET}  { return TOKEN_R_BRACKET; }
-{DEFAULT}    { YYSTYPE r = { .str = yytext }; yyerror(r, "Unrecognized character"); }
+{BLANK}      { }
+{DEFAULT}    { YYSTYPE r; r.str = yytext; yyerror(&r, "Unrecognized character"); }
 
 %%

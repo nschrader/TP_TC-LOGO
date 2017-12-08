@@ -6,13 +6,14 @@
 
 int main() {
   Program* program;
-  FILE* input = fopen("logos/basic.logo", "r");
-  if (input == NULL) {
+  FILE* inputFile = fopen("logos/basic.logo", "r");
+  if (inputFile == NULL) {
     perror("Cannot open input file");
     exit(EXIT_FAILURE);
   }
-  YY_BUFFER_STATE buffer = yy_create_buffer(input, YY_BUF_SIZE);
+  YY_BUFFER_STATE inputBuffer = yy_create_buffer(inputFile, YY_BUF_SIZE);
+  yy_switch_to_buffer(inputBuffer);
   yyparse(&program);
-  printf("Read some stuff, dunno what to do know");
+  printf("Read some stuff, dunno what to do now\n");
   return EXIT_SUCCESS;
 }
