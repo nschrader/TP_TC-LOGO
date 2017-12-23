@@ -1,7 +1,8 @@
-#ifndef INSTRUCTIONS_H
-#define INSTRUCTIONS_H
+#ifndef INSTRUCTION_H
+#define INSTRUCTION_H
 
-typedef unsigned int uint;
+#include "main.h"
+
 typedef struct {
   double x;
   double y;
@@ -9,8 +10,8 @@ typedef struct {
 } Cursor;
 
 Cursor* newCursor(double x, double y, double a);
-Cursor* doForward(Cursor cursor, uint value);
-void doLeft(Cursor* cursor, uint value);
-void doRight(Cursor* cursor, uint value);
+Cursor* cursorForward(const Cursor* cursor, uint value);
+void cursorLeft(Cursor* cursor, uint value);
+void cursorRight(Cursor* cursor, uint value);
 
 #endif

@@ -7,6 +7,6 @@ void writeSvgDoctype(FILE* svg);
 void writeSvgXml(FILE* svg);
 void writeSvgTagOpen(FILE* svg);
 void writeSvgTagClose(FILE* svg);
-void writeSvgLine(FILE* svg, Cursor c1, Cursor c2);
+void writeSvgLine(FILE* svg, const Cursor* c1, const Cursor* c2);
 
 #endif

@@ -4,6 +4,7 @@
 #include "instruction.h"
 
 #define ANGLE_CIRCLE 360
+#define TO_RADIANS(x) (x * M_PI / 180.0)
 
 Cursor* newCursor(double x, double y, double a) {
   Cursor* new = malloc(sizeof(Cursor));
@@ -13,21 +14,21 @@ Cursor* newCursor(double x, double y, double a) {
   return new;
 }
 
-Cursor* doForward(Cursor cursor, uint value) {
-  Cursor* new = newCursor(cursor.x, cursor.y, cursor.a);
-  new->x += value*cos(new->a);
-  new->y += value*sin(new->a);
+Cursor* cursorForward(const Cursor* cursor, uint value) {
+  Cursor* new = newCursor(cursor->x, cursor->y, cursor->a);
+  new->x += value*cos(TO_RADIANS(new->a));
+  new->y += value*sin(TO_RADIANS(new->a));
   return new;
 }
 
-static void doTurn(Cursor* cursor, int value) {
+static void cursorTurn(Cursor* cursor, int value) {
   cursor->a = (value + cursor->a) % ANGLE_CIRCLE;
 }
 
-void doLeft(Cursor* cursor, uint value) {
-  doTurn(cursor, value);
+void cursorLeft(Cursor* cursor, uint value) {
+  cursorTurn(cursor, value);
 }
 
-void doRight(Cursor* cursor, uint value) {
-  doTurn(cursor, -value);
+void cursorRight(Cursor* cursor, uint value) {
+  cursorTurn(cursor, -value);
 }

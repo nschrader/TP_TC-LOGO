@@ -27,4 +27,4 @@ all:		${OBJ} ${HDR}
 	${YACC} --output=$<.c --defines=$<.h $<
 
 clean:
-	rm -rf *.l.c *.l.h *.y.c *.y.h *.o ${PROGRAM}
+	rm -rf *.l.c *.l.h *.y.c *.y.h *.o *.svg ${PROGRAM}

@@ -57,3 +57,4 @@ tc-logo
 *.l.h
 *.y.c
 *.y.h
+*.svg

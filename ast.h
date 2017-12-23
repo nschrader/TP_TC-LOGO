@@ -1,6 +1,8 @@
 #ifndef AST_H
 #define AST_H
 
+#include "main.h"
+
 /**
  * Abstract Instruction and stuff
  */
@@ -33,11 +35,11 @@ typedef enum {
 typedef struct {
   InstructionType type;
   AtomicInstructionType atomicType;
-  int value;
+  uint value;
 } AtomicInstruction;
 
-#define isAtomicInstruction(x) (x->type == ATOMIC)
-#define asAtomicInstruction(x) (isAtomicInstruction(x) ? (AtomicInstruction*) : NULL)
+#define isAtomicInstruction(x) (*x == ATOMIC)
+#define asAtomicInstruction(x) (isAtomicInstruction(x) ? (AtomicInstruction*) x : NULL)
 
 AtomicInstruction* newAtomicInstruction(AtomicInstructionType atomicType, int value);
 
@@ -47,12 +49,12 @@ AtomicInstruction* newAtomicInstruction(AtomicInstructionType atomicType, int va
  */
  typedef struct {
    InstructionType type;
-   int value;
+   uint value;
    Program* program;
  } RepeatInstruction;
 
-#define isRepeatInstruction(x) (x->type == REPEAT)
-#define asRepeatInstruction(x) (isRepeatInstruction(x) ? (RepeatInstruction*) : NULL)
+#define isRepeatInstruction(x) (*x == REPEAT)
+#define asRepeatInstruction(x) (isRepeatInstruction(x) ? (RepeatInstruction*) x : NULL)
 
 RepeatInstruction* newRepeatInstruction(int value, Program* program);
 
