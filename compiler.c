@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "compiler.h"
 #include "instruction.h"
@@ -42,8 +43,22 @@ void doProgram(const Program* program, Cursor* cursor) {
   }
 }
 
-void compile(const Program* program, FILE *svg) {
+void compile(const Program* program, FILE *svg, bool niceViewBox) {
   Cursor* cursor = newCursor();
   doProgram(program, cursor);
+  if (niceViewBox) {
+    cursor->xOrigin -= cursor->width*0.1;
+    cursor->yOrigin -= cursor->height*0.1;
+    cursor->width *= 1.2;
+    cursor->height *= 1.2;
+  }
   writeSvg(cursor, svg);
+}
+
+void compileBare(const Program* program, FILE *svg) {
+  compile(program, svg, false);
+}
+
+void compileNice(const Program* program, FILE *svg) {
+  compile(program, svg, true);
 }

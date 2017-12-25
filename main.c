@@ -24,7 +24,8 @@ int main() {
   FILE* inputFile = openInputFile("logos/basic.logo");
   yyparse(&program);
   FILE* outputFile = openOutputFile("test123.svg");
-  compile(program, outputFile);
+  compileBare(program, outputFile);
+  compileNice(program, outputFile);
   fclose(inputFile);
   fclose(outputFile);
   return EXIT_SUCCESS;
