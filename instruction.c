@@ -1,24 +1,47 @@
-#include "stdlib.h"
-#include "math.h"
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
 
 #include "instruction.h"
 
 #define ANGLE_CIRCLE 360
 #define TO_RADIANS(x) (x * M_PI / 180.0)
 
-Cursor* newCursor(double x, double y, double a) {
-  Cursor* new = malloc(sizeof(Cursor));
+Point* newPoint(double x, double y, Point* next) {
+  Point* new = malloc(sizeof(Point));
   new->x = x;
   new->y = y;
-  new->a = a;
+  new->next = next;
   return new;
 }
 
-Cursor* cursorForward(const Cursor* cursor, uint value) {
-  Cursor* new = newCursor(cursor->x, cursor->y, cursor->a);
-  new->x += value*cos(TO_RADIANS(new->a));
-  new->y += value*sin(TO_RADIANS(new->a));
+void addPoint(Cursor* cursor) {
+  cursor->points = newPoint(cursor->x, cursor->y, cursor->points);
+  if (cursor->x < cursor->xOrigin) {
+    cursor->xOrigin = cursor->x;
+  }
+  if (cursor->y < cursor->yOrigin) {
+    cursor->yOrigin = cursor->y;
+  }
+  if (cursor->x > cursor->xOrigin + cursor->width) {
+    cursor->width = cursor->x - cursor->xOrigin;
+  }
+  if (cursor->y > cursor->yOrigin + cursor->height) {
+    cursor->height = cursor->y - cursor->yOrigin;
+  }
+}
+
+Cursor* newCursor() {
+  Cursor* new = malloc(sizeof(Cursor));
+  memset(new, 0, sizeof(Cursor));
+  addPoint(new);
   return new;
+}
+
+void cursorForward(Cursor* cursor, uint value) {
+  cursor->x += value*cos(TO_RADIANS(cursor->a));
+  cursor->y -= value*sin(TO_RADIANS(cursor->a));
+  addPoint(cursor);
 }
 
 static void cursorTurn(Cursor* cursor, int value) {

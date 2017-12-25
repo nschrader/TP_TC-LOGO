@@ -6,26 +6,44 @@
 #define SVG_DOCTYPE "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" " \
   "\"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n"
 #define SVG_XML "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-#define SVG_TAG_OPEN "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n"
+#define SVG_TAG_OPEN "<svg xmlns=\"http://www.w3.org/2000/svg\" " \
+  "version=\"1.1\" viewBox=\"%f %f %f %f\">\n"
 #define SVG_TAG_CLOSE "</svg>\n"
 #define SVG_LINE "\t<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" stroke=\"red\" />\n"
 
-void writeSvgDoctype(FILE* svg) {
+static void writeSvgDoctype(FILE* svg) {
   fprintf(svg, SVG_DOCTYPE);
 }
 
-void writeSvgXml(FILE* svg) {
+static void writeSvgXml(FILE* svg) {
   fprintf(svg, SVG_XML);
 }
 
-void writeSvgTagOpen(FILE* svg) {
-  fprintf(svg, SVG_TAG_OPEN);
+static void writeSvgTagOpen(const Cursor* cursor, FILE* svg) {
+  fprintf(svg, SVG_TAG_OPEN, cursor->xOrigin, cursor->yOrigin,
+    cursor->width, cursor->height);
 }
 
-void writeSvgTagClose(FILE* svg) {
+static void writeSvgTagClose(FILE* svg) {
   fprintf(svg, SVG_TAG_CLOSE);
 }
 
-void writeSvgLine(FILE* svg, const Cursor* c1, const Cursor* c2) {
-  fprintf(svg, SVG_LINE, c1->x, c1->y, c2->x, c2->y);
+static void writeSvgLine(const Point* point, FILE* svg) {
+  const Point* p1 = point;
+  const Point* p2 = point->next;
+  if (p2 != NULL) {
+    fprintf(svg, SVG_LINE, p1->x, p1->y, p2->x, p2->y);
+  }
+}
+
+void writeSvg(const Cursor* cursor, FILE* svg) {
+  writeSvgXml(svg);
+  writeSvgDoctype(svg);
+  writeSvgTagOpen(cursor, svg);
+  Point* current = cursor->points;
+  while(current != NULL) {
+    writeSvgLine(current, svg);
+    current = current->next;
+  }
+  writeSvgTagClose(svg);
 }

@@ -11,50 +11,39 @@ static void failWithBadAstError() {
   exit(EXIT_FAILURE);
 }
 
-static void doForward(Cursor* cursor, uint value, FILE* svg) {
-  Cursor* new = cursorForward(cursor, value);
-  writeSvgLine(svg, cursor, new);
-  *cursor = *new;
-}
-
-static void doAtomic(AtomicInstruction* inst, Cursor* cursor, FILE* svg) {
+static void doAtomic(const AtomicInstruction* inst, Cursor* cursor) {
   switch (inst->atomicType) {
     case LEFT: cursorLeft(cursor, inst->value); break;
     case RIGHT: cursorRight(cursor, inst->value); break;
-    case FORWARD: doForward(cursor, inst->value, svg); break;
+    case FORWARD: cursorForward(cursor, inst->value); break;
     default: failWithBadAstError();
   }
 }
 
-static void doRepeat(RepeatInstruction* inst, Cursor* cursor, FILE* svg) {
+static void doRepeat(const RepeatInstruction* inst, Cursor* cursor) {
   int i;
   for (i = 0; i < inst->value; i++) {
-    doProgram(inst->program, cursor, svg);
+    doProgram(inst->program, cursor);
   }
 }
 
-void doProgram(Program* program, Cursor* cursor, FILE* svg) {
+void doProgram(const Program* program, Cursor* cursor) {
   if (program != NULL) {
-    doProgram(program->right, cursor, svg);
     if (isAtomicInstruction(program->instruction)) {
       AtomicInstruction* inst = asAtomicInstruction(program->instruction);
-      doAtomic(inst, cursor, svg);
+      doAtomic(inst, cursor);
     } else if (isRepeatInstruction(program->instruction)) {
       RepeatInstruction* inst = asRepeatInstruction(program->instruction);
-      doRepeat(inst, cursor, svg);
+      doRepeat(inst, cursor);
     } else {
       failWithBadAstError();
     }
+    doProgram(program->right, cursor);
   }
 }
 
-void compile(Program* program, FILE *svg) {
-  writeSvgXml(svg);
-  writeSvgDoctype(svg);
-  writeSvgTagOpen(svg);
-
-  Cursor* cursor = newCursor(0, 0, 0);
-  doProgram(program, cursor, svg);
-
-  writeSvgTagClose(svg);
+void compile(const Program* program, FILE *svg) {
+  Cursor* cursor = newCursor();
+  doProgram(program, cursor);
+  writeSvg(cursor, svg);
 }

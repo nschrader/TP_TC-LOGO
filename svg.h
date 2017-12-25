@@ -3,10 +3,6 @@
 
 #include "instruction.h"
 
-void writeSvgDoctype(FILE* svg);
-void writeSvgXml(FILE* svg);
-void writeSvgTagOpen(FILE* svg);
-void writeSvgTagClose(FILE* svg);
-void writeSvgLine(FILE* svg, const Cursor* c1, const Cursor* c2);
+void writeSvg(const Cursor* cursor, FILE* svg);
 
 #endif

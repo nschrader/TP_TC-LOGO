@@ -5,7 +5,7 @@
 #include "ast.h"
 #include "instruction.h"
 
-void doProgram(Program* program, Cursor* cursor, FILE* svg);
-void compile(Program* program, FILE *svg);
+void doProgram(const Program* program, Cursor* cursor);
+void compile(const Program* program, FILE *svg);
 
 #endif
