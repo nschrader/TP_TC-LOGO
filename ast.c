@@ -9,7 +9,7 @@ Program* newProgram(Program* right, Instruction* instruction) {
   return new;
 }
 
-AtomicInstruction* newAtomicInstruction(AtomicInstructionType atomicType, int value) {
+AtomicInstruction* newAtomicInstruction(AtomicInstructionType atomicType, uint value) {
   AtomicInstruction* new = malloc(sizeof(AtomicInstruction));
   new->type = ATOMIC;
   new->atomicType = atomicType;
@@ -17,7 +17,7 @@ AtomicInstruction* newAtomicInstruction(AtomicInstructionType atomicType, int va
   return new;
 }
 
-RepeatInstruction* newRepeatInstruction(int value, Program* program) {
+RepeatInstruction* newRepeatInstruction(uint value, Program* program) {
   RepeatInstruction* new = malloc(sizeof(RepeatInstruction));
   new->type = REPEAT;
   new->value = value;

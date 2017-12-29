@@ -41,7 +41,7 @@ typedef struct {
 #define isAtomicInstruction(x) (*x == ATOMIC)
 #define asAtomicInstruction(x) (isAtomicInstruction(x) ? (AtomicInstruction*) x : NULL)
 
-AtomicInstruction* newAtomicInstruction(AtomicInstructionType atomicType, int value);
+AtomicInstruction* newAtomicInstruction(AtomicInstructionType atomicType, uint value);
 
 
 /**
@@ -56,6 +56,6 @@ AtomicInstruction* newAtomicInstruction(AtomicInstructionType atomicType, int va
 #define isRepeatInstruction(x) (*x == REPEAT)
 #define asRepeatInstruction(x) (isRepeatInstruction(x) ? (RepeatInstruction*) x : NULL)
 
-RepeatInstruction* newRepeatInstruction(int value, Program* program);
+RepeatInstruction* newRepeatInstruction(uint value, Program* program);
 
 #endif

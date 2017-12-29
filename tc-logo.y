@@ -8,11 +8,12 @@
 
 %code requires {
   #include "ast.h"
+  #include "main.h"
 }
 
 %parse-param { Program** program }
 %union {
-  int val;
+  uint val;
   char* str;
   Program* prog;
   Instruction* inst;

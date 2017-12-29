@@ -6,10 +6,11 @@
 
 #include "ast.h"
 #include "instruction.h"
+#include "main.h"
 
 typedef struct {
   bool hasNiceViewBox;
-  int resolution;
+  uint resolution;
   const Program* program;
   FILE *svg ;
 } CompileParameters;
