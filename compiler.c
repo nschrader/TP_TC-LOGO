@@ -1,11 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
+#include <string.h>
 
 #include "compiler.h"
 #include "instruction.h"
 #include "svg.h"
 #include "ast.h"
+
+#define ADD_MARGIN_TO_ORIGIN(origin, size) (origin - size*0.1)
+#define ADD_MARGIN_TO_SIZE(size) (size * 1.2)
+
+CompileParameters* newCompileParameters() {
+  CompileParameters* new = malloc(sizeof(CompileParameters));
+  memset(new, 0, sizeof(CompileParameters));
+  return new;
+}
 
 static void failWithBadAstError() {
   fprintf(stderr, "Bad internal error: Inconsistent abstract syntax tree!\n");
@@ -43,22 +52,31 @@ void doProgram(const Program* program, Cursor* cursor) {
   }
 }
 
-void compile(const Program* program, FILE *svg, bool niceViewBox) {
-  Cursor* cursor = newCursor();
-  doProgram(program, cursor);
-  if (niceViewBox) {
-    cursor->xOrigin -= cursor->width*0.1;
-    cursor->yOrigin -= cursor->height*0.1;
-    cursor->width *= 1.2;
-    cursor->height *= 1.2;
+static ViewPort* makeViewPort(const CompileParameters* parameters, const Cursor* cursor) {
+  ViewPort* viewPort = newViewPort();
+  if (parameters->hasNiceViewBox) {
+    viewPort->xOrigin = ADD_MARGIN_TO_ORIGIN(cursor->xOrigin, cursor->width);
+    viewPort->yOrigin = ADD_MARGIN_TO_ORIGIN(cursor->yOrigin, cursor->height);
+    viewPort->width = ADD_MARGIN_TO_SIZE(cursor->width);
+    viewPort->height = ADD_MARGIN_TO_SIZE(cursor->height);
+  } else {
+    viewPort->xOrigin = cursor->xOrigin;
+    viewPort->yOrigin = cursor->yOrigin;
+    viewPort->width = cursor->width;
+    viewPort->height = cursor->height;
   }
-  writeSvg(cursor, svg);
+  if (parameters->resolution != NO_RESOLUTION) {
+    viewPort->widthIn = viewPort->width / parameters->resolution;
+    viewPort->heightIn = viewPort->height / parameters->resolution;
+  }
+  return viewPort;
 }
 
-void compileBare(const Program* program, FILE *svg) {
-  compile(program, svg, false);
-}
-
-void compileNice(const Program* program, FILE *svg) {
-  compile(program, svg, true);
+void compile(const CompileParameters* parameters) {
+  Cursor* cursor = newCursor();
+  doProgram(parameters->program, cursor);
+  ViewPort* viewPort = makeViewPort(parameters, cursor);
+  writeSvg(cursor->points, viewPort, parameters->svg);
+  freeCursor(cursor);
+  free(viewPort);
 }

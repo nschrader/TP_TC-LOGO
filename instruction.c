@@ -55,3 +55,12 @@ void cursorLeft(Cursor* cursor, uint value) {
 void cursorRight(Cursor* cursor, uint value) {
   cursorTurn(cursor, -value);
 }
+
+void freeCursor(Cursor* cursor) {
+  while(cursor->points != NULL) {
+    Point* point = cursor->points;
+    cursor->points = cursor->points->next;
+    free(point);
+  }
+  free(cursor);
+}

@@ -3,6 +3,16 @@
 
 #include "instruction.h"
 
-void writeSvg(const Cursor* cursor, FILE* svg);
+typedef struct {
+  double xOrigin;
+  double yOrigin;
+  double width;
+  double height;
+  double widthIn;
+  double heightIn;
+} ViewPort;
+
+ViewPort* newViewPort();
+void writeSvg(const Point* points, const ViewPort* viewPort, FILE* svg);
 
 #endif

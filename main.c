@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "ast.h"
+#include "compiler.h"
 #include "tc-logo.l.h"
 
 static FILE *openInputFile(const char* path) {
@@ -24,8 +25,13 @@ int main() {
   FILE* inputFile = openInputFile("logos/basic.logo");
   yyparse(&program);
   FILE* outputFile = openOutputFile("test123.svg");
-  compileBare(program, outputFile);
-  compileNice(program, outputFile);
+  CompileParameters* parameters = newCompileParameters();
+  parameters->hasNiceViewBox = true;
+  parameters->resolution = 96;
+  parameters->svg = outputFile;
+  parameters->program = program;
+  compile(parameters);
+  free(parameters);
   fclose(inputFile);
   fclose(outputFile);
   return EXIT_SUCCESS;

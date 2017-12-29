@@ -7,9 +7,17 @@
 #include "ast.h"
 #include "instruction.h"
 
+typedef struct {
+  bool hasNiceViewBox;
+  int resolution;
+  const Program* program;
+  FILE *svg ;
+} CompileParameters;
+
+//For internal use only
 void doProgram(const Program* program, Cursor* cursor);
-void compile(const Program* program, FILE *svg, bool niceViewBox);
-void compileBare(const Program* program, FILE *svg);
-void compileNice(const Program* program, FILE *svg);
+
+CompileParameters* newCompileParameters();
+void compile(const CompileParameters* parameters);
 
 #endif
