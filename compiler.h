@@ -11,14 +11,16 @@
 typedef struct {
   bool hasNiceViewBox;
   uint resolution;
-  const Program* program;
-  FILE *svg ;
+  FILE* logo;
+  FILE* svg;
+  char* svgPath;
 } CompileParameters;
 
 //For internal use only
 void doProgram(const Program* program, Cursor* cursor);
 
 CompileParameters* newCompileParameters();
-void compile(const CompileParameters* parameters);
+void compile(const Program* program, const CompileParameters* parameters);
+void freeCompileParameters(CompileParameters* compileParameters);
 
 #endif

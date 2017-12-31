@@ -72,11 +72,17 @@ static ViewPort* makeViewPort(const CompileParameters* parameters, const Cursor*
   return viewPort;
 }
 
-void compile(const CompileParameters* parameters) {
+void compile(const Program* program, const CompileParameters* parameters) {
   Cursor* cursor = newCursor();
-  doProgram(parameters->program, cursor);
+  doProgram(program, cursor);
   ViewPort* viewPort = makeViewPort(parameters, cursor);
   writeSvg(cursor->points, viewPort, parameters->svg);
   freeCursor(cursor);
   free(viewPort);
+}
+
+void freeCompileParameters(CompileParameters* compileParameters) {
+  closeFILE(compileParameters->logo);
+  closeFILE(compileParameters->svg);
+  free(compileParameters);
 }

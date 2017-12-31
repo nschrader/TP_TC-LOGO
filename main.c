@@ -1,11 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "main.h"
 #include "ast.h"
 #include "compiler.h"
 #include "tc-logo.l.h"
 
-static FILE *openInputFile(const char* path) {
+#define NO_MORE_OPTS -1
+#define HELP_MESSAGE "%1$s - the TC-LOGO compiler\n" \
+"Usage: %1$s [options] file\n" \
+"Options:\n" \
+"\t-h\t\t Print this help\n" \
+"\t-v\t\t Make a nice viewBox (i.e. add some margin)\n" \
+"\t-r resolution\t Calculate the real size of the logo\n" \
+"\t\t\t using the resolution given in DPI\n"
+
+static void printHelp(char* executable) {
+  printf(HELP_MESSAGE, executable);
+  exit(EXIT_SUCCESS);
+}
+
+static FILE* openInputFile(const char* path) {
   FILE* inputFile = fopen(path, "r");
   if (inputFile == NULL) {
     perror("Cannot open input file");
@@ -13,26 +28,70 @@ static FILE *openInputFile(const char* path) {
   }
   YY_BUFFER_STATE inputBuffer = yy_create_buffer(inputFile, YY_BUF_SIZE);
   yy_switch_to_buffer(inputBuffer);
-  return inputFile;
 }
 
 static FILE *openOutputFile(const char* path) {
-  return fopen(path, "w+");
+  FILE* outputFile = fopen(path, "w");
+  if (outputFile == NULL) {
+    outputFile = fopen(STANDARD_OUTPUT_FILE, "w");
+  }
+  if (outputFile == NULL) {
+    perror("Cannot open output file");
+    exit(EXIT_FAILURE);
+  }
+  return outputFile;
 }
 
-int main() {
-  Program* program;
-  FILE* inputFile = openInputFile("logos/basic.logo");
-  yyparse(&program);
-  FILE* outputFile = openOutputFile("test123.svg");
+static uint getResolution(char* optarg) {
+  uint value = atoi(optarg);
+  if (value <= 0) {
+    fprintf(stderr, "Resolution must be a positive number in DPI.\n"
+    "For example, use \"-r 96\" for 96 DPI.\n");
+    exit(EXIT_FAILURE);
+  }
+  return value;
+}
+
+void cleanUpIfFailure(int exitCode, void* arg) {
+  CompileParameters* parameters = (CompileParameters*) arg;
+  if (exitCode == EXIT_FAILURE) {
+    closeFILE(parameters->logo);
+    closeFILE(parameters->svg);
+    remove(parameters->svgPath);
+  }
+}
+
+static CompileParameters* getArguments(int argc, char* argv[]) {
   CompileParameters* parameters = newCompileParameters();
-  parameters->hasNiceViewBox = true;
-  parameters->resolution = 96;
-  parameters->svg = outputFile;
-  parameters->program = program;
-  compile(parameters);
-  free(parameters);
-  fclose(inputFile);
-  fclose(outputFile);
+  char opt;
+  char* inputPath;
+  char* outputPath;
+  on_exit(&cleanUpIfFailure, parameters);
+  while ((opt = getopt(argc, argv, "hvr:o:")) != NO_MORE_OPTS) {
+    switch (opt) {
+      case 'h': printHelp(argv[0]); break;
+      case 'v': parameters->hasNiceViewBox = true; break;
+      case 'r': parameters->resolution = getResolution(optarg); break;
+      case 'o': parameters->svgPath = optarg; break;
+      default: exit(EXIT_FAILURE); break;
+    }
+  }
+  if (optind >= argc) {
+    fprintf(stderr, "Expected input file\n");
+    exit(EXIT_FAILURE);
+  } else {
+    parameters->logo = openInputFile(argv[optind]);
+  }
+  parameters->svg = openOutputFile(parameters->svgPath);
+  return parameters;
+}
+
+int main(int argc, char *argv[]) {
+  Program* program;
+  CompileParameters* parameters = getArguments(argc, argv);
+  yyparse(&program);
+  compile(program, parameters);
+  freeCompileParameters(parameters);
+  freeProgram(program);
   return EXIT_SUCCESS;
 }
