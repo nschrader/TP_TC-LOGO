@@ -54,16 +54,18 @@ void doProgram(const Program* program, Cursor* cursor) {
 
 static ViewPort* makeViewPort(const CompileParameters* parameters, const Cursor* cursor) {
   ViewPort* viewPort = newViewPort();
+  double width = cursor->xMax - cursor->xMin;
+  double height = cursor->yMax - cursor->yMin;
   if (parameters->hasNiceViewBox) {
-    viewPort->xOrigin = ADD_MARGIN_TO_ORIGIN(cursor->xOrigin, cursor->width);
-    viewPort->yOrigin = ADD_MARGIN_TO_ORIGIN(cursor->yOrigin, cursor->height);
-    viewPort->width = ADD_MARGIN_TO_SIZE(cursor->width);
-    viewPort->height = ADD_MARGIN_TO_SIZE(cursor->height);
+    viewPort->xOrigin = ADD_MARGIN_TO_ORIGIN(cursor->xMin, width);
+    viewPort->yOrigin = ADD_MARGIN_TO_ORIGIN(cursor->yMin, height);
+    viewPort->width = ADD_MARGIN_TO_SIZE(width);
+    viewPort->height = ADD_MARGIN_TO_SIZE(height);
   } else {
-    viewPort->xOrigin = cursor->xOrigin;
-    viewPort->yOrigin = cursor->yOrigin;
-    viewPort->width = cursor->width;
-    viewPort->height = cursor->height;
+    viewPort->xOrigin = cursor->xMin;
+    viewPort->yOrigin = cursor->yMin;
+    viewPort->width = width;
+    viewPort->height = height;
   }
   if (parameters->resolution != NO_RESOLUTION) {
     viewPort->widthIn = viewPort->width / parameters->resolution;

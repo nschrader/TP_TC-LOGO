@@ -16,10 +16,10 @@ typedef struct {
   int a;
 
   //Gathered information about the path
-  double xOrigin;
-  double yOrigin;
-  double width;
-  double height;
+  double xMin;
+  double yMin;
+  double xMax;
+  double yMax;
   Point* points;
 } Cursor;
 

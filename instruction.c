@@ -6,6 +6,8 @@
 
 #define ANGLE_CIRCLE 360
 #define TO_RADIANS(x) (x * M_PI / 180.0)
+#define MIN(x, y) (x < y ? x : y)
+#define MAX(x, y) (x > y ? x : y)
 
 Point* newPoint(double x, double y, Point* next) {
   Point* new = malloc(sizeof(Point));
@@ -17,18 +19,10 @@ Point* newPoint(double x, double y, Point* next) {
 
 void addPoint(Cursor* cursor) {
   cursor->points = newPoint(cursor->x, cursor->y, cursor->points);
-  if (cursor->x < cursor->xOrigin) {
-    cursor->xOrigin = cursor->x;
-  }
-  if (cursor->y < cursor->yOrigin) {
-    cursor->yOrigin = cursor->y;
-  }
-  if (cursor->x > cursor->xOrigin + cursor->width) {
-    cursor->width = cursor->x - cursor->xOrigin;
-  }
-  if (cursor->y > cursor->yOrigin + cursor->height) {
-    cursor->height = cursor->y - cursor->yOrigin;
-  }
+  cursor->xMin = MIN(cursor->x, cursor->xMin);
+  cursor->yMin = MIN(cursor->y, cursor->yMin);
+  cursor->xMax = MAX(cursor->x, cursor->xMax);
+  cursor->yMax = MAX(cursor->y, cursor->yMax);
 }
 
 Cursor* newCursor() {

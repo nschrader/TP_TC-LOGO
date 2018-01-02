@@ -79,9 +79,8 @@ static CompileParameters* getArguments(int argc, char* argv[]) {
   if (optind >= argc) {
     fprintf(stderr, "Expected input file\n");
     exit(EXIT_FAILURE);
-  } else {
-    parameters->logo = openInputFile(argv[optind]);
   }
+  parameters->logo = openInputFile(argv[optind]);
   parameters->svg = openOutputFile(parameters->svgPath);
   return parameters;
 }
