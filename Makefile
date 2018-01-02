@@ -15,7 +15,7 @@ SRC = ${PARSERS:.y=.y.c} ${LEXERS:.l=.l.c} ${SOURCES}
 HDR = ${HEADERS} ${TOKENS}
 OBJ = ${SRC:.c=.c.o}
 
-.PHONY: 		clean
+.PHONY: 		clean doc
 .PRECIOUS: 	%.l.c %.l.h %.y.c %.y.h %.c.o
 
 all:		${OBJ}
@@ -31,4 +31,7 @@ all:		${OBJ}
 	${YACC} --output=$<.c --defines=$<.h $<
 
 clean:
-	rm -rf *.l.c *.l.h *.y.c *.y.h *.c.o *.svg ${PROGRAM}
+	rm -rf *.l.c *.l.h *.y.c *.y.h *.c.o *.svg ${PROGRAM} html
+
+doc:
+	doxygen
