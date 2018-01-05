@@ -1,3 +1,49 @@
+/**
+ * @mainpage
+ * This program is a TC-LOGO compiler, a subset of the LOGO language.
+ * <br>
+ * It takes any TC-LOGO file as input an produces a SVG file. Some command-line
+ * parameters are available, type "tlc -h" to display the help.
+ * <br>
+ * This package contains also several CUnit tests (see below).
+ *
+ * @section Make
+ * To compile:
+ * @code
+ * make main
+ * @endcode
+ * To compile and run tests:
+ * @code
+ * make test
+ * @endcode
+ * To generate the Doxygen documentation:
+ * @code
+ * make doc
+ * @endcode
+ * To clean-up:
+ * @code
+ * make clean
+ * @endcode
+ * To make all of them (except for cleaning-up):
+ * @code
+ * make all
+ * @endcode
+ *
+ * @section program Program logic
+ * This project uses Flex and Bison. To see what is behind yyparse() take a look
+ * at the appropriate *.l and *.y files. The rest of the program logic can be
+ * seen here:
+ * @snippet main.c main
+ *
+ * @see ast.h
+ * @see compiler.h
+ * @see main.h
+ * @see instruction.h
+ * @see svg.h
+ * @see @ref tc-logo.l
+ * @see @ref tc-logo.y
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -85,6 +131,7 @@ static CompileParameters* getArguments(int argc, char* argv[]) {
   return parameters;
 }
 
+//! [main]
 int main(int argc, char *argv[]) {
   Program* program;
   CompileParameters* parameters = getArguments(argc, argv);
@@ -94,3 +141,4 @@ int main(int argc, char *argv[]) {
   freeProgram(program);
   return EXIT_SUCCESS;
 }
+//! [main]

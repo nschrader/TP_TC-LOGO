@@ -35,3 +35,19 @@ typedef unsigned int uint;
 int main(int argc, char *argv[]);
 
 #endif
+
+/**
+ * @page tc-logo.l Flex: tc-logo.l
+ * @dontinclude tc-logo.l
+ * @skip UNIT
+ * Those are the tokens used by Flex for lexing the input file:
+ * @until {DEFAULT}
+ */
+
+/**
+ * @page tc-logo.y Bison: tc-logo.y
+ * @dontinclude tc-logo.y
+ * @skip result
+ * This is the grammar used by Bison for parsing the input file:
+ * @until TOKEN_UINT
+ */
