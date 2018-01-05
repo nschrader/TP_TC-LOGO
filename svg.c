@@ -62,3 +62,7 @@ void writeSvg(const Point* points, const ViewPort* viewPort, FILE* svg) {
   }
   writeSvgTagClose(svg);
 }
+
+void freeViewPort(ViewPort *viewPort) {
+  free(viewPort);
+}

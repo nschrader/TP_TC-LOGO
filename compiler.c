@@ -80,7 +80,7 @@ void compile(const Program* program, const CompileParameters* parameters) {
   ViewPort* viewPort = makeViewPort(parameters, cursor);
   writeSvg(cursor->points, viewPort, parameters->svg);
   freeCursor(cursor);
-  free(viewPort);
+  freeViewPort(viewPort);
 }
 
 void freeCompileParameters(CompileParameters* compileParameters) {
