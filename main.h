@@ -20,7 +20,12 @@
 /**
  * Save verion of fclose() avoiding NULL-pointer errors
  */
-#define closeFILE(x) {if(x != NULL) fclose(x);}
+#define closeFILE(x) {if (x!=NULL) fclose(x);}
+
+/**
+ * Save verion of remove() avoiding errors when file does not exist
+ */
+#define removePath(x) {if (x!=NULL) remove(x);}
 
 /**
  * Definition of positive-value-only type.

@@ -13,7 +13,7 @@ void freeProgram(Program* program) {
   if (program->right != NULL) {
     freeProgram(program->right);
   }
-  free(program->instruction);
+  freeInstruction(program->instruction);
   free(program);
 }
 
@@ -40,4 +40,14 @@ RepeatInstruction* newRepeatInstruction(uint value, Program* program) {
 void freeRepeatInstruction(RepeatInstruction* repeatInstruction) {
   freeProgram(repeatInstruction->program);
   free(repeatInstruction);
+}
+
+void freeInstruction(Instruction* instruction) {
+  if (isAtomicInstruction(instruction)) {
+    freeAtomicInstruction(asAtomicInstruction(instruction));
+  } else if (isRepeatInstruction(instruction)) {
+    freeRepeatInstruction(asRepeatInstruction(instruction));
+  } else {
+    free(instruction);
+  }
 }

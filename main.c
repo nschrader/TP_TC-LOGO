@@ -74,6 +74,7 @@ static FILE* openInputFile(const char* path) {
   }
   YY_BUFFER_STATE inputBuffer = yy_create_buffer(inputFile, YY_BUF_SIZE);
   yy_switch_to_buffer(inputBuffer);
+  return inputFile;
 }
 
 static FILE *openOutputFile(const char* path) {
@@ -101,10 +102,10 @@ static uint getResolution(char* optarg) {
 void cleanUpIfFailure(int exitCode, void* arg) {
   CompileParameters* parameters = (CompileParameters*) arg;
   if (exitCode == EXIT_FAILURE) {
-    closeFILE(parameters->logo);
-    closeFILE(parameters->svg);
-    remove(parameters->svgPath);
+    removePath(parameters->svgPath);
   }
+  yypop_buffer_state();
+  freeCompileParameters(parameters);
 }
 
 static CompileParameters* getArguments(int argc, char* argv[]) {
@@ -137,7 +138,6 @@ int main(int argc, char *argv[]) {
   CompileParameters* parameters = getArguments(argc, argv);
   yyparse(&program);
   compile(program, parameters);
-  freeCompileParameters(parameters);
   freeProgram(program);
   return EXIT_SUCCESS;
 }
