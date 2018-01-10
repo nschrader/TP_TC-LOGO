@@ -67,7 +67,7 @@ static void printHelp(char* executable) {
 }
 
 static FILE* openInputFile(const char* path) {
-  FILE* inputFile = fopen(path, "r");
+  FILE* inputFile = openFILE(path, "r");
   if (inputFile == NULL) {
     perror("Cannot open input file");
     exit(EXIT_FAILURE);
@@ -78,7 +78,7 @@ static FILE* openInputFile(const char* path) {
 }
 
 static FILE *openOutputFile(const char* path) {
-  FILE* outputFile = fopen(path, "w");
+  FILE* outputFile = openFILE(path, "w");
   if (outputFile == NULL) {
     outputFile = fopen(STANDARD_OUTPUT_FILE, "w");
   }
@@ -99,7 +99,7 @@ static uint getResolution(char* optarg) {
   return value;
 }
 
-void cleanUpIfFailure(int exitCode, void* arg) {
+void cleanUpParameters(int exitCode, void* arg) {
   CompileParameters* parameters = (CompileParameters*) arg;
   if (exitCode == EXIT_FAILURE) {
     removePath(parameters->svgPath);
@@ -113,7 +113,7 @@ static CompileParameters* getArguments(int argc, char* argv[]) {
   char opt;
   char* inputPath;
   char* outputPath;
-  on_exit(&cleanUpIfFailure, parameters);
+  on_exit(&cleanUpParameters, parameters);
   while ((opt = getopt(argc, argv, "hvr:o:")) != NO_MORE_OPTS) {
     switch (opt) {
       case 'h': printHelp(argv[0]); break;

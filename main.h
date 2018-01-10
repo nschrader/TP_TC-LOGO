@@ -18,14 +18,19 @@
 #define STANDARD_OUTPUT_FILE "out.svg"
 
 /**
+ * Save verion of fopen() avoiding errors when file does not exist
+ */
+#define openFILE(x, y) ((x!=NULL) ? fopen(x,y) : NULL)
+
+/**
  * Save verion of fclose() avoiding NULL-pointer errors
  */
-#define closeFILE(x) {if (x!=NULL) fclose(x);}
+#define closeFILE(x) ((x!=NULL) ? fclose(x) : 0)
 
 /**
  * Save verion of remove() avoiding errors when file does not exist
  */
-#define removePath(x) {if (x!=NULL) remove(x);}
+#define removePath(x) ((x!=NULL) ? remove(x) : 0)
 
 /**
  * Definition of positive-value-only type.
