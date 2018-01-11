@@ -22,7 +22,7 @@ all:		${OBJ}
 	${CC} ${LDFLAGS} ${OBJ} -o ${PROGRAM}
 
 %.c.o: %.c ${HDR}
-	$(CC) -c $(CFLAGS) $< -o $@
+	${CC} -c ${CFLAGS} $< -o $@
 
 %.l.c %.l.h:	%.l
 	${LEX} --outfile=$<.c --header-file=$<.h $<
