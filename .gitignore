@@ -51,12 +51,16 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-#Program files
+## Custom part
+# Specific Project files
 tlc
+runner
+html
+
+# Patterns
 *.c.o
 *.l.c
 *.l.h
 *.y.c
 *.y.h
 *.svg
-html/

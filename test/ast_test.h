@@ -5,5 +5,7 @@
 
 void testAtomicInstructionCast();
 void testRepeatInstructionCast();
+void testCostructors();
+void testDestructors();
 
 #endif
