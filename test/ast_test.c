@@ -53,9 +53,7 @@ void testCostructors() {
 void testDeconstructors() {
   Program* p = makeProgram();
   freeProgram(p);
-  if (memoryLeak_close()) {
-    CU_FAIL("Detected memory leek. Debug with Valgrind!");
-  }
+  ASSERT_MEMORY_LEAKS();
 }
 
 void testAtomicInstructionCast() {

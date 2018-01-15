@@ -36,11 +36,17 @@ void memoryLeak_free(const void* p);
 void* memoryLeak_malloc(size_t s);
 
 /**
- * Check if there where any memory leaks.
+ * Check if there where any memory leaks and clean-up leak checker
  *
  * @returns 1 if there were, 0 if not
  */
 int memoryLeak_close();
+
+/**
+ * Custom assert macro to test for memory leaks
+ */
+#define ASSERT_MEMORY_LEAKS() { if (memoryLeak_close()) \
+  CU_FAIL("Detected memory leek. Debug with Valgrind!") }
 
 /**
  * To keep track of allocations and frees, we have to replace

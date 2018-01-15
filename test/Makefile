@@ -1,9 +1,9 @@
 CC 			= gcc
 CFLAGS  = -g -I${DEPS_DIR} -DTEST_CASE -Wall
-LDFLAGS = -lcunit
-TESTS		= ast_test.c memory_leak.c
+LDFLAGS = -lcunit -lm
+TESTS		= ast_test.c instruction_test.c memory_leak.c
 DEPS_DIR= ../${MAIN_DIR}
-DEPS		= ast.c
+DEPS		= ast.c instruction.c
 
 DPS = ${foreach DEP, ${DEPS}, ${DEPS_DIR}/${DEP}}
 DPH = ${DPS:.c=.h}
