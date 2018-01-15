@@ -4,6 +4,10 @@
 
 #include "instruction.h"
 
+#ifdef TEST_CASE
+#include "memory_leak.h"
+#endif
+
 #define ANGLE_CIRCLE 360
 #define TO_RADIANS(x) (x * M_PI / 180.0)
 #define MIN(x, y) (x < y ? x : y)

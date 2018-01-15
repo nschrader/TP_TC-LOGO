@@ -2,7 +2,7 @@
 #include "ast.h"
 
 #ifdef TEST_CASE
-#include "test/memory_leak.h"
+#include "memory_leak.h"
 #endif
 
 Program* newProgram(Program* right, Instruction* instruction) {

@@ -3,6 +3,7 @@
 #include "memory_leak.h"
 #include "ast_test.h"
 #include "instruction_test.h"
+#include "svg_test.h"
 
 #define ADD_TEST_TO(x, y) CU_add_test(x, #y, y)
 
@@ -22,6 +23,10 @@ int main() {
   ADD_TEST_TO(instruction, testCursorForward);
   ADD_TEST_TO(instruction, testCursorLeft);
   ADD_TEST_TO(instruction, testCursorRight);
+
+  CU_pSuite svg = CU_add_suite(SVG_TEST_DESC, NULL, memoryLeak_close);
+  ADD_TEST_TO(svg, testViewPortDeconstructor);
+  ADD_TEST_TO(svg, testWriteSvg);
 
   CU_basic_run_tests();
 

@@ -10,7 +10,7 @@
 
 static MemoryRecord* memoryRecord = NULL;
 
-static MemoryRecord *do_memoryLeak_free(MemoryRecord* record, const void* p) {
+static MemoryRecord *do_memoryLeak_free(MemoryRecord* record, void* p) {
   if (record == NULL) {
     return NULL;
   }
@@ -24,7 +24,7 @@ static MemoryRecord *do_memoryLeak_free(MemoryRecord* record, const void* p) {
   return record;
 }
 
-void memoryLeak_free(const void* p) {
+void memoryLeak_free(void* p) {
   if (memoryRecord == NULL) {
     fprintf(stderr, "Attempting to free invalid address. Debug with Valgrind!");
     ASSERT_HERE();
@@ -35,7 +35,6 @@ void memoryLeak_free(const void* p) {
 static MemoryRecord* do_memoryLeak_malloc(size_t s) {
   MemoryRecord* record = malloc(sizeof(MemoryRecord));
   record->p = malloc(s);
-  record->s = s;
   record->next = NULL;
   return record;
 }
@@ -67,4 +66,12 @@ int memoryLeak_close() {
   do_memoryLeak_close(memoryRecord);
   memoryRecord = NULL;
   return hasMemoryLeak;
+}
+
+void* real_malloc(size_t n) {
+  return malloc(n);
+}
+
+void real_free(void* p) {
+  free(p);
 }

@@ -14,21 +14,18 @@
  *
  * @var MemoryRecord::p
  * Pointer to the allocatated memory
- * @var MemoryRecord::s
- * Size of the allocatated memory
  * @var MemoryRecord::next
  * Pointer to the next @ref MemoryRecord element in list
  */
 typedef struct _MemoryRecord {
   void* p;
-  size_t s;
   struct _MemoryRecord *next;
 } MemoryRecord;
 
 /**
  * Replacement function for free()
  */
-void memoryLeak_free(const void* p);
+void memoryLeak_free(void* p);
 
 /**
  * Replacement function for malloc()
@@ -61,5 +58,16 @@ int memoryLeak_close();
 #define malloc(x) memoryLeak_malloc(x) //!< See @ref MEMORY_LEAKER
 
 #endif
+
+/**
+ * In case we need to allocate some memory
+ * that will be freed in a library function
+ */
+void* real_malloc(size_t n);
+
+/**
+ * In case we need to free memory that got allocated in a library function
+ */
+void real_free(void* p);
 
 #endif
