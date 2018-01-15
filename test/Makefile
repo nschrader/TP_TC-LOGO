@@ -21,10 +21,7 @@ all: runner
 runner:		${OBJ}
 	${CC} ${LDFLAGS} ${OBJ} -o ${EXE}
 
-%.c.o: ${DEPS_DIR}/%.c ${HDR} ${DPH}
-	${CC} -c ${CFLAGS} $< -o $@
-
-%.c.o: ./%.c ${DPH}
+%.c.o: %.c ${HDR} ${DPH}
 	${CC} -c ${CFLAGS} $< -o $@
 
 clean:
