@@ -205,7 +205,7 @@ void freeRepeatInstruction(RepeatInstruction* repeatInstruction);
 
 /**
  * General destructor for a Instruction class.
- * It will determin its exact class and call the corresponding destructor.
+ * It will determine its exact class and call the corresponding destructor.
  *
  * @param instruction
  * Object to be freed

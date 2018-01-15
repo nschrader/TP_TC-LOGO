@@ -20,7 +20,7 @@
  * @var CompileParameters::hasNiceViewBox
  * Should the compiler make a nice viewBox (ie add some margin)?
  * @var CompileParameters::resolution
- * Calculate the real size of the logo\n using the resolution given in DPI
+ * Calculate the real size of the logo using the resolution given in DPI
  * @var CompileParameters::logo
  * Input file (so the compiler can close it in case of error)
  * @var CompileParameters::svg

@@ -1,6 +1,7 @@
 #include <CUnit/Basic.h>
 
 #include "ast_test.h"
+#include "memory_leak.h"
 #include "ast.h"
 
 static Program* makeProgram() {

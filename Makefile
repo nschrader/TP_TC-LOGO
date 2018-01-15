@@ -1,37 +1,25 @@
-CC 		= gcc
-LEX 	= flex
-YACC 	= bison
+export MAIN_DIR = main
+export TEST_DIR = test
+export PROGRAM	= tlc
+export RUNNER	= runner.c
 
-CFLAGS  = -g
-LDFLAGS = -lm
-PROGRAM	= tlc
-LEXERS 	= tc-logo.l
-PARSERS = tc-logo.y
-SOURCES = main.c ast.c instruction.c svg.c compiler.c
-HEADERS = ${SOURCES:.c=.h}
-TOKENS 	= ${PARSERS:.y=.y.h} ${LEXERS:.l=.l.h}
+.PHONY: main test install doc clean
 
-SRC = ${PARSERS:.y=.y.c} ${LEXERS:.l=.l.c} ${SOURCES}
-HDR = ${HEADERS} ${TOKENS}
-OBJ = ${SRC:.c=.c.o}
+all: main test install doc
 
-.PHONY: 		clean doc
-.PRECIOUS: 	%.l.c %.l.h %.y.c %.y.h %.c.o
+main:
+	${MAKE} -C ${MAIN_DIR}
 
-all:		${OBJ}
-	${CC} ${LDFLAGS} ${OBJ} -o ${PROGRAM}
+test:
+	${MAKE} -C ${TEST_DIR}
 
-%.c.o: %.c ${HDR}
-	${CC} -c ${CFLAGS} $< -o $@
-
-%.l.c %.l.h:	%.l
-	${LEX} --outfile=$<.c --header-file=$<.h $<
-
-%.y.c %.y.h:	%.y
-	${YACC} --output=$<.c --defines=$<.h $<
-
-clean:
-	rm -rf *.l.c *.l.h *.y.c *.y.h *.c.o *.svg ${PROGRAM} html
+install: main
+	cp ${MAIN_DIR}/${PROGRAM} .
 
 doc:
 	doxygen
+
+clean:
+	${MAKE} -C ${MAIN_DIR} clean
+	${MAKE} -C ${TEST_DIR} clean
+	rm -rf ${PROGRAM} html/
