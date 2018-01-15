@@ -6,6 +6,6 @@
 void testAtomicInstructionCast();
 void testRepeatInstructionCast();
 void testCostructors();
-void testDestructors();
+void testDeconstructors();
 
 #endif

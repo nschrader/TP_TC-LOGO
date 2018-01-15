@@ -68,7 +68,7 @@ typedef struct _Program {
 Program* newProgram(Program* right, Instruction* instruction);
 
 /**
- * Destructor for @ref Program.
+ * Deconstructor for @ref Program.
  * All attached @ref Program objects are also destructed
  *
  * @param program
@@ -139,7 +139,7 @@ typedef struct {
 AtomicInstruction* newAtomicInstruction(AtomicInstructionType atomicType, uint value);
 
 /**
- * Destructor for @ref AtomicInstruction
+ * Deconstructor for @ref AtomicInstruction
  *
  * @param atomicInstruction
  * Object to be freed
@@ -195,7 +195,7 @@ typedef struct {
 RepeatInstruction* newRepeatInstruction(uint value, Program* program);
 
 /**
- * Destructor for @ref RepeatInstruction.
+ * Deconstructor for @ref RepeatInstruction.
  * The associatd @ref Program will also be freed
  *
  * @param repeatInstruction
@@ -204,8 +204,8 @@ RepeatInstruction* newRepeatInstruction(uint value, Program* program);
 void freeRepeatInstruction(RepeatInstruction* repeatInstruction);
 
 /**
- * General destructor for a Instruction class.
- * It will determine its exact class and call the corresponding destructor.
+ * General deconstructor for a Instruction class.
+ * It will determine its exact class and call the corresponding deconstructor.
  *
  * @param instruction
  * Object to be freed

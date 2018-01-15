@@ -30,4 +30,4 @@ all:		${OBJ}
 	${YACC} --output=$<.c --defines=$<.h $<
 
 clean:
-	rm -rf *.l.c *.l.h *.y.c *.y.h *.c.o *.svg ${PROGRAM} html
+	rm -rf *.l.c *.l.h *.y.c *.y.h *.c.o ${PROGRAM}

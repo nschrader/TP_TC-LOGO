@@ -56,7 +56,7 @@ ViewPort* newViewPort();
 void writeSvg(const Point* points, const ViewPort* viewPort, FILE* svg);
 
 /**
- * Destructor for @ref ViewPort.
+ * Deconstructor for @ref ViewPort.
  *
  * @param viewPort
  * Object to be freed

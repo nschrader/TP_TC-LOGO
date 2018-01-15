@@ -22,4 +22,4 @@ doc:
 clean:
 	${MAKE} -C ${MAIN_DIR} clean
 	${MAKE} -C ${TEST_DIR} clean
-	rm -rf ${PROGRAM} html/
+	rm -rf *.svg ${PROGRAM} html/

@@ -10,7 +10,7 @@ int main() {
 
   ADD_TEST_TO(runner, testAtomicInstructionCast);
   ADD_TEST_TO(runner, testRepeatInstructionCast);
-  ADD_TEST_TO(runner, testDestructors);
+  ADD_TEST_TO(runner, testDeconstructors);
   ADD_TEST_TO(runner, testCostructors);
 
   CU_basic_run_tests();

@@ -65,7 +65,7 @@ CompileParameters* newCompileParameters();
 void compile(const Program* program, const CompileParameters* parameters);
 
 /**
- * Destructor for @ref CompileParameters structure.
+ * Deconstructor for @ref CompileParameters structure.
  * Closes all files described by FILE fields and frees structure
  *
  * @param compileParameters

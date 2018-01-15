@@ -25,6 +25,14 @@ void addPoint(Cursor* cursor) {
   cursor->yMax = MAX(cursor->y, cursor->yMax);
 }
 
+void freePoints(Point* points) {
+  while(points != NULL) {
+    Point* point = points;
+    points = points->next;
+    free(point);
+  }
+}
+
 Cursor* newCursor() {
   Cursor* new = malloc(sizeof(Cursor));
   memset(new, 0, sizeof(Cursor));
@@ -51,10 +59,6 @@ void cursorRight(Cursor* cursor, uint value) {
 }
 
 void freeCursor(Cursor* cursor) {
-  while(cursor->points != NULL) {
-    Point* point = cursor->points;
-    cursor->points = cursor->points->next;
-    free(point);
-  }
+  freePoints(cursor->points);
   free(cursor);
 }

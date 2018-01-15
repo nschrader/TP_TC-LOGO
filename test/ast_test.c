@@ -50,7 +50,7 @@ void testCostructors() {
   memoryLeak_close();
 }
 
-void testDestructors() {
+void testDeconstructors() {
   Program* p = makeProgram();
   freeProgram(p);
   if (memoryLeak_close()) {

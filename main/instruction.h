@@ -85,6 +85,15 @@ Point* newPoint(double x, double y, Point* next);
 void addPoint(Cursor* cursor);
 
 /**
+ * Deconstructor for @ref Point.
+ * Works on all list elements
+ *
+ * @param points
+ * Object to be freed
+ */
+void freePoints(Point* points);
+
+/**
  * Constructor for @ref Cursor.
  * All fields are zero'd
  *
@@ -124,7 +133,7 @@ void cursorLeft(Cursor* cursor, uint value);
 void cursorRight(Cursor* cursor, uint value);
 
 /**
- * Destructor for @ref Cursor.
+ * Deconstructor for @ref Cursor.
  * All attached @ref Point objects are also destructed
  *
  * @param cursor
