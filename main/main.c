@@ -5,7 +5,8 @@
  * It takes any TC-LOGO file as input an produces a SVG file. Some command-line
  * parameters are available, type "tlc -h" to display the help.
  * <br>
- * This package contains also several CUnit tests (see below).
+ * This package contains also several CUnit tests (see below). If you don't have
+ * CUnit installed on your system, you can type `make cunit`.
  *
  * @section Make
  * To compile:
@@ -15,6 +16,14 @@
  * To compile and run tests:
  * @code
  * make test
+ * @endcode
+ * To compile CUnit:
+ * @code
+ * make cunit
+ * @endcode
+ * To remove CUnit:
+ * @code
+ * make clean-cunit
  * @endcode
  * To generate the Doxygen documentation:
  * @code
@@ -40,6 +49,7 @@
  * @see main.h
  * @see instruction.h
  * @see svg.h
+ * @see memory_leak.h
  * @see @ref tc-logo.l
  * @see @ref tc-logo.y
  */
