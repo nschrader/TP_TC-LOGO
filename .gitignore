@@ -64,3 +64,4 @@ html
 *.y.c
 *.y.h
 *.svg
+*.a

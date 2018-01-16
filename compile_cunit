@@ -1,0 +1,10 @@
+#!/bin/bash
+
+tar jxf CUnit-2.1-3.tar.bz2
+cd CUnit-2.1-3/
+autoreconf -fi
+./configure --disable-automated --disable-console --disable-shared --disable-fast-install
+make
+cp CUnit/Sources/.libs/libcunit.a ..
+cd ..
+rm -rf CUnit-2.1-3
