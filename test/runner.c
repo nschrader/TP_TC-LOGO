@@ -4,6 +4,7 @@
 #include "ast_test.h"
 #include "instruction_test.h"
 #include "svg_test.h"
+#include "compiler_test.h"
 
 #define ADD_TEST_TO(x, y) CU_add_test(x, #y, y)
 
@@ -27,6 +28,11 @@ int main() {
   CU_pSuite svg = CU_add_suite(SVG_TEST_DESC, NULL, memoryLeak_close);
   ADD_TEST_TO(svg, testViewPortDeconstructor);
   ADD_TEST_TO(svg, testWriteSvg);
+
+  CU_pSuite compiler = CU_add_suite(COMPILER_TEST_DESC, NULL, memoryLeak_close);
+  ADD_TEST_TO(compiler, testCompileParametersDeconstructor);
+  ADD_TEST_TO(compiler, testDoProgram);
+  ADD_TEST_TO(compiler, testCompile);
 
   CU_basic_run_tests();
 

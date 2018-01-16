@@ -7,6 +7,10 @@
 #include "svg.h"
 #include "ast.h"
 
+#ifdef TEST_CASE
+#include "memory_leak.h"
+#endif
+
 #define ADD_MARGIN_TO_ORIGIN(origin, size) (origin - size*0.1)
 #define ADD_MARGIN_TO_SIZE(size) (size * 1.2)
 
@@ -86,5 +90,6 @@ void compile(const Program* program, const CompileParameters* parameters) {
 void freeCompileParameters(CompileParameters* compileParameters) {
   closeFILE(compileParameters->logo);
   closeFILE(compileParameters->svg);
+  free(compileParameters->svgPath);
   free(compileParameters);
 }

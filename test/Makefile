@@ -3,9 +3,9 @@ CFLAGS 	= -g -Wall -I${DEPS_DIR} -I. -I.. -DTEST_CASE
 LDFLAGS = -lm
 CUNIT_A	= ../CUnit/libcunit.a
 CUNIT_SO= -lcunit
-TESTS		= ast_test.c instruction_test.c svg_test.c memory_leak.c misc.c
+TESTS		= ast_test.c instruction_test.c svg_test.c compiler_test.c memory_leak.c misc.c
 DEPS_DIR= ../${MAIN_DIR}
-DEPS		= ast.c instruction.c svg.c
+DEPS		= ast.c instruction.c svg.c compiler.c
 
 DPS = ${foreach DEP, ${DEPS}, ${DEPS_DIR}/${DEP}}
 DPH = ${DPS:.c=.h}

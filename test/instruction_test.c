@@ -3,6 +3,7 @@
 #include "instruction_test.h"
 #include "memory_leak.h"
 #include "instruction.h"
+#include "misc.h"
 
 void testPointDeconstructor() {
   Point* p;
@@ -31,7 +32,6 @@ void testAddPoint() {
   CU_ASSERT(p->x == 0);
   CU_ASSERT(p->y == 0);
 
-  freeCursor(c);
   memoryLeak_close();
 }
 
@@ -47,13 +47,12 @@ void testCursorForward() {
   Cursor* c = newCursor();
   cursorLeft(c, 60);
   cursorForward(c, 100);
-  CU_ASSERT(c->x > 49.9 && c->x < 50.1);
-  CU_ASSERT(c->y < -86.5 && c->y > -86.7);
+  ASSERT_APPROX(c->x, 50);
+  ASSERT_APPROX(c->y, -86.6);
   Point* first = c->points->next;
   CU_ASSERT(first->x == 0);
   CU_ASSERT(first->y == 0);
 
-  freeCursor(c);
   memoryLeak_close();
 }
 
@@ -65,7 +64,6 @@ void testCursorLeft() {
   CU_ASSERT(c->y == 0);
   CU_ASSERT(c->points->next == NULL);
 
-  freeCursor(c);
   memoryLeak_close();
 }
 
@@ -77,6 +75,5 @@ void testCursorRight() {
   CU_ASSERT(c->y == 0);
   CU_ASSERT(c->points->next == NULL);
 
-  freeCursor(c);
   memoryLeak_close();
 }
