@@ -1,7 +1,7 @@
 CC 			= gcc
-CFLAGS 	= -g -Wall -I${DEPS_DIR} -I. -DTEST_CASE
+CFLAGS 	= -g -Wall -I${DEPS_DIR} -I. -I../CUnit -DTEST_CASE
 LDFLAGS = -lcunit -lm
-CUNIT		= ../libcunit.a
+CUNIT		= ../CUnit/libcunit.a
 TESTS		= ast_test.c instruction_test.c svg_test.c memory_leak.c misc.c
 DEPS_DIR= ../${MAIN_DIR}
 DEPS		= ast.c instruction.c svg.c
@@ -20,7 +20,7 @@ all: runner
 	./${EXE}
 
 runner:	${OBJ}
-	if [ -f "$(CUNIT)" ]; \
+	if [ -f "${CUNIT}" ]; \
 	then ${CC} ${CFLAGS} ${LDFLAGS} ${CUNIT} ${OBJ} -o ${EXE}; \
 	else ${CC} ${CFLAGS} ${LDFLAGS} ${OBJ} -o ${EXE}; \
 	fi
