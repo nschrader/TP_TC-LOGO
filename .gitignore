@@ -56,6 +56,7 @@ dkms.conf
 tlc
 runner
 html
+CUnit
 
 # Patterns
 *.c.o
@@ -64,4 +65,3 @@ html
 *.y.c
 *.y.h
 *.svg
-*.a
