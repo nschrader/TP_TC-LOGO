@@ -5,11 +5,7 @@ cd CUnit-2.1-3/
 autoreconf -fi
 ./configure --disable-automated --disable-console --disable-shared --disable-fast-install
 make
-<<<<<<< HEAD
 mkdir -p ../CUnit
-=======
-mkdir ../CUnit
->>>>>>> ac27b962f7384cd2556ad4867285e341a6e248c3
 cp CUnit/Sources/.libs/libcunit.a ../CUnit/
 cp CUnit/Headers/Basic.h ../CUnit/
 cd ..
