@@ -90,6 +90,5 @@ void compile(const Program* program, const CompileParameters* parameters) {
 void freeCompileParameters(CompileParameters* compileParameters) {
   closeFILE(compileParameters->logo);
   closeFILE(compileParameters->svg);
-  free(compileParameters->svgPath);
   free(compileParameters);
 }

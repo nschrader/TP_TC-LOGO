@@ -16,7 +16,6 @@ void testCompileParametersDeconstructor() {
 
   p->svg = tmpfile();
   p->logo = tmpfile();
-  p->svgPath = malloc(42);
 
   free(z);
   freeCompileParameters(p);
