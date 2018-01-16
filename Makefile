@@ -3,7 +3,7 @@ export TEST_DIR = test
 export PROGRAM	= tlc
 export RUNNER	= runner.c
 
-.PHONY: main test install doc clean
+.PHONY: main test install cunit doc clean clean-cunit
 
 all: main test install doc
 

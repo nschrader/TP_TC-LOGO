@@ -3,19 +3,7 @@
 #include "ast_test.h"
 #include "memory_leak.h"
 #include "ast.h"
-
-static Program* makeProgram() {
-  Program *p, *subP;
-
-  subP = newProgram(NULL, asInstruction(newAtomicInstruction(RIGHT, 42)));
-  subP = newProgram(subP, asInstruction(newAtomicInstruction(FORWARD, 666)));
-
-  p = newProgram(NULL, asInstruction(newAtomicInstruction(FORWARD, 1)));
-  p = newProgram(p, asInstruction(newRepeatInstruction(4, subP)));
-  p = newProgram(p, asInstruction(newAtomicInstruction(LEFT, 90)));
-
-  return p;
-}
+#include "misc.h"
 
 void testCostructors() {
   AtomicInstruction* a;

@@ -1,21 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <CUnit/Basic.h>
 
 #include "svg_test.h"
 #include "memory_leak.h"
 #include "svg.h"
-
-static int countLines(FILE* f) {
-  int i;
-  size_t n = 0;
-  char* str = NULL;
-  rewind(f);
-
-  for (i = 0; getline(&str, &n, f) != EOF; i++);
-  real_free(str);
-  return i;
-}
+#include "misc.h"
 
 void testViewPortDeconstructor() {
   ViewPort* v = newViewPort();
