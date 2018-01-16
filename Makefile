@@ -26,3 +26,6 @@ clean:
 	${MAKE} -C ${MAIN_DIR} clean
 	${MAKE} -C ${TEST_DIR} clean
 	rm -rf *.svg ${PROGRAM} CUnit-2.1-3/ html/
+
+clean-cunit:
+	rm -rf CUnit/
